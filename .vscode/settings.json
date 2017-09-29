@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "array": "c",
+        "stm32f3xx_ll_gpio.h": "c",
+        "stm32f3xx_ll_bus.h": "c",
+        "system_error": "cpp",
+        "stm32f3xx.h": "c"
+    }
+}

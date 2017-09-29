@@ -1,0 +1,31 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/objs/main.elf",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}",
+            "environment": [],
+            "MIMode": "gdb",
+            "miDebuggerPath": "arm-none-eabi-gdb",            
+            "setupCommands": [
+                {
+                    "text": "file /home/naimon/git/flightlog/objs/main.elf",
+                },
+                {
+                    "text": "target remote localhost:3333",
+                },
+                {
+                    "text": "load /home/naimon/git/flightlog/objs/main.elf",
+                },                
+                {
+                    "text": "monitor reset halt",
+                },
+            ]
+        },
+    ]
+}
