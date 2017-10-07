@@ -102,7 +102,8 @@ void I2C_Burst_Read_Registers(uint32_t SlaveAddr, char reg, int number, char* re
     
     // Send read start condition
     LL_I2C_HandleTransfer(I2C1, SlaveAddr, LL_I2C_ADDRSLAVE_7BIT, number, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_READ);                
-    for (int i=0; i<number; i++){
+    int i;
+    for (i=0; i<number; i++){
         while(!LL_I2C_IsActiveFlag_RXNE(I2C1));
         result[i] = LL_I2C_ReceiveData8(I2C1);
     }

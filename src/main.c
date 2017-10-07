@@ -2,7 +2,7 @@
 #include "main.h"
 #include "retarget.h"
 #include "mpu6050.h"
-#include "hmc5983.h"
+#include "hmc5x83.h"
 #include "ms5611.h"
 #include "i2c.h"
 #include "stm32f3xx.h"

@@ -32,7 +32,8 @@ void MS5611_Init()
     LL_mDelay(20);        
 
     // read calibration coefficients (PROM base + i = 1..6)
-    for (int i=0; i<7; i++){
+    int i;
+    for (i=0; i<7; i++){
         MS5611_Burst_Read_Registers(MS5611_CMD_PROM + (i<<1), 2, ((char*)&MS5611_Calib)+2*i);
     }
     
