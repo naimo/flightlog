@@ -49,11 +49,10 @@ void HMC_Read()
 
     printf("mag x=%5d y=%5d z=%5d\r\n", \
     (short)((mag_data[0]<<8) + mag_data[1]),\
-    (short)((mag_data[2]<<8) + mag_data[3]),\
-    (short)((mag_data[4]<<8) + mag_data[5]));
+    (short)((mag_data[4]<<8) + mag_data[5]),\
+    (short)((mag_data[2]<<8) + mag_data[3]));
 
     // HMC_Burst_Read_Registers(HMC_REG_TEMPOUT, 2, temp_data);
 
-    // printf("temp=%5d\r\n", \
-    // (short)((temp_data[0]<<8) + temp_data[1]));
+    // printf("temp=%5d\r\n",(short)((temp_data[0]<<8) + temp_data[1]));
 }

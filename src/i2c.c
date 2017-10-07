@@ -38,6 +38,18 @@ void I2C_Init()
     LL_I2C_Enable(I2C1);
 }
 
+void I2C_Send_Command(uint32_t SlaveAddr, char cmd)
+{
+    // Wait for previous communication to end
+    while(LL_I2C_IsActiveFlag_BUSY(I2C1));
+    
+    LL_I2C_HandleTransfer(I2C1, SlaveAddr, LL_I2C_ADDRSLAVE_7BIT, 1, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);                
+    
+    LL_I2C_TransmitData8(I2C1, cmd);
+    
+    return;
+}
+
 void I2C_Write_Register(uint32_t SlaveAddr, char reg, char value)
 {
     // Wait for previous communication to end
@@ -78,6 +90,10 @@ char I2C_Read_Register(uint32_t SlaveAddr, char reg)
 
 void I2C_Burst_Read_Registers(uint32_t SlaveAddr, char reg, int number, char* result)
 {
+    
+    // Wait for previous communication to end
+    while(LL_I2C_IsActiveFlag_BUSY(I2C1));    
+    
     // send write start
     LL_I2C_HandleTransfer(I2C1, SlaveAddr, LL_I2C_ADDRSLAVE_7BIT, 1, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);                
     LL_I2C_TransmitData8(I2C1, reg);  

@@ -21,6 +21,7 @@ CSRC += src/retarget.c
 CSRC += src/i2c.c
 CSRC += src/hmc5983.c
 CSRC += src/mpu6050.c
+CSRC += src/ms5611.c
 CSRC += src/system_stm32f3xx.c
 CSRC += STM32CubeF3/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_gpio.c
 CSRC += STM32CubeF3/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_utils.c
@@ -50,4 +51,4 @@ clean :
 	rm -r $(OBJS_DIR)/
 
 flash : $(OBJS_DIR)/main.hex
-	openocd -f ~/.platformio/packages/tool-openocd/scripts/board/stm32f303cc.cfg -c "program $(OBJS_DIR)/main.hex reset exit"
+	stm32flash -b 230400 -w objs/main.hex -v -g 0x0 /dev/ttyUSB0

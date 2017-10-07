@@ -3,6 +3,7 @@
 #include "retarget.h"
 #include "mpu6050.h"
 #include "hmc5983.h"
+#include "ms5611.h"
 #include "i2c.h"
 #include "stm32f3xx.h"
 #include "stm32f3xx_ll_bus.h"
@@ -20,18 +21,21 @@ int main() {
         Retarget_Init();
         StatusLED_Init();
         I2C_Init();
-        MPU_Init();
-        HMC_Init();
+        // MPU_Init();
+        // HMC_Init();
         
         while(1){
                 LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_3);
 
-                LL_mDelay(500);
+                LL_mDelay(1000);
+
+                MS5611_Init();                                
 
                 LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_3);
 
+                MS5611_Read_Temp();
                 // MPU_Read_Acc_Gyro(); 
-                HMC_Read();               
+                // HMC_Read();             /  
         };
 }
 
