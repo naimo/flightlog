@@ -75,8 +75,6 @@ void MS5607_Read_Temp_and_Pressure(int32_t *temp, int32_t *pressure)
     LL_mDelay(10); 
     D1 = MS5607_Read_ADC();
 
-    LL_mDelay(10);     
-
     // start temp conversion
     MS5607_Send_Command(MS5607_CMD_D2_4096);    
     LL_mDelay(10); 

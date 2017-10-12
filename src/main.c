@@ -21,24 +21,19 @@ int main() {
         Retarget_Init();
         StatusLED_Init();
         I2C_Init();
-        // MPU_Init();
-        // HMC_Init();
+        MPU_Init();
+        HMC_Init();
         MS5607_Init();                                
         
         int32_t temp, pressure;
 
         while(1){            
-                LL_mDelay(500);
-                LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_3);
-                // MS5607_Init();                                               
-
-                LL_mDelay(500);
-
-                LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_3);
+                // LL_mDelay(50);
+                LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_3);
 
                 MS5607_Read_Temp_and_Pressure(&temp, &pressure);
-                // MPU_Read_Acc_Gyro(); 
-                // HMC_Read();
+                MPU_Read_Acc_Gyro(); 
+                HMC_Read();
                 printf("\r\n");
         };
 }
