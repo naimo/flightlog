@@ -3,7 +3,7 @@
 #include "retarget.h"
 #include "mpu6050.h"
 #include "hmc5x83.h"
-#include "ms5611.h"
+#include "ms5607.h"
 #include "i2c.h"
 #include "stm32f3xx.h"
 #include "stm32f3xx_ll_bus.h"
@@ -23,24 +23,28 @@ int main() {
         I2C_Init();
         // MPU_Init();
         // HMC_Init();
+        MS5607_Init();                                
+        
+        int32_t temp, pressure;
 
-        while(1){              
+        while(1){            
+                LL_mDelay(500);
                 LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_3);
+                // MS5607_Init();                                               
 
-                LL_mDelay(1000);
-
-                MS5611_Init();                                
+                LL_mDelay(500);
 
                 LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_3);
 
-                MS5611_Read_Temp();
+                MS5607_Read_Temp_and_Pressure(&temp, &pressure);
                 // MPU_Read_Acc_Gyro(); 
-                // HMC_Read();             /  
+                // HMC_Read();
                 printf("\r\n");
         };
 }
 
 void StatusLED_Init(void){
+        
         /* Enbale GPIOB clock */
         LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
 

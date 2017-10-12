@@ -1,3 +1,4 @@
+// #include <stdio.h>
 #include "stm32f3xx.h"
 #include "stm32f3xx_ll_i2c.h"
 #include "stm32f3xx_ll_rcc.h"
@@ -38,7 +39,7 @@ void I2C_Init()
     LL_I2C_Enable(I2C1);
 }
 
-void I2C_Send_Command(uint32_t SlaveAddr, unsigned char cmd)
+void I2C_Send_Command(uint8_t SlaveAddr, uint8_t cmd)
 {
     // Wait for previous communication to end
     while(LL_I2C_IsActiveFlag_BUSY(I2C1));
@@ -50,7 +51,7 @@ void I2C_Send_Command(uint32_t SlaveAddr, unsigned char cmd)
     return;
 }
 
-void I2C_Write_Register(uint32_t SlaveAddr, unsigned char reg, unsigned char value)
+void I2C_Write_Register(uint8_t SlaveAddr, uint8_t reg, uint8_t value)
 {
     // Wait for previous communication to end
     while(LL_I2C_IsActiveFlag_BUSY(I2C1));
@@ -66,9 +67,9 @@ void I2C_Write_Register(uint32_t SlaveAddr, unsigned char reg, unsigned char val
     return;
 }
 
-char I2C_Read_Register(uint32_t SlaveAddr, unsigned char reg)
+uint8_t I2C_Read_Register(uint8_t SlaveAddr, uint8_t reg)
 {
-    char receive;
+    uint8_t receive;
 
     // Wait for previous communication to end
     while(LL_I2C_IsActiveFlag_BUSY(I2C1));    
@@ -88,7 +89,7 @@ char I2C_Read_Register(uint32_t SlaveAddr, unsigned char reg)
     return receive;
 }
 
-void I2C_Burst_Read_Registers(uint32_t SlaveAddr, unsigned char reg, int number, unsigned char* result)
+void I2C_Burst_Read_Registers(uint8_t SlaveAddr, uint8_t reg, int32_t number, uint8_t* result)
 {
     
     // Wait for previous communication to end
@@ -99,14 +100,18 @@ void I2C_Burst_Read_Registers(uint32_t SlaveAddr, unsigned char reg, int number,
     LL_I2C_TransmitData8(I2C1, reg);  
     // Busy wait for communication to end
     while(LL_I2C_IsActiveFlag_BUSY(I2C1));
+
+    // printf("[I2C]_receive ");
     
     // Send read start condition
     LL_I2C_HandleTransfer(I2C1, SlaveAddr, LL_I2C_ADDRSLAVE_7BIT, number, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_READ);                
-    int i;
+    int32_t i;
     for (i=0; i<number; i++){
         while(!LL_I2C_IsActiveFlag_RXNE(I2C1));
         result[i] = LL_I2C_ReceiveData8(I2C1);
+        // printf("%x ",result[i]);
     }
-
+    // printf("\r\n");
+    
     return;
 }

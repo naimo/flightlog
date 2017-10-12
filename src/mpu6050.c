@@ -3,15 +3,15 @@
 #include "i2c.h"
 #include "stm32f3xx_ll_utils.h"
 
-void MPU_Write_Register(unsigned char reg, unsigned char value){
+void MPU_Write_Register(uint8_t reg, uint8_t value){
     I2C_Write_Register(MPU_I2C_ADDRESS, reg, value);
 }
 
-char MPU_Read_Register(unsigned char reg){
+char MPU_Read_Register(uint8_t reg){
     return I2C_Read_Register(MPU_I2C_ADDRESS, reg);
 }
 
-void MPU_Burst_Read_Registers(unsigned char reg, int number, unsigned char* result)
+void MPU_Burst_Read_Registers(uint8_t reg, int32_t number, uint8_t* result)
 {
     I2C_Burst_Read_Registers(MPU_I2C_ADDRESS, reg, number, result);
 }
@@ -48,20 +48,20 @@ void MPU_Init()
 
 void MPU_Read_Acc_Gyro()
 {
-    unsigned char gyro_data[6];
-    unsigned char acc_data[6];
+    uint8_t gyro_data[6];
+    uint8_t acc_data[6];
 
     MPU_Burst_Read_Registers(MPU_REG_GYRO_OUT, 6, gyro_data);
     
     printf("gyro x=%5d y=%5d z=%5d ", \
-            (short)((gyro_data[0]<<8) | gyro_data[1]),\
-            (short)((gyro_data[2]<<8) | gyro_data[3]),\
-            (short)((gyro_data[4]<<8) | gyro_data[5]));
+            (int16_t)((gyro_data[0]<<8) | gyro_data[1]),\
+            (int16_t)((gyro_data[2]<<8) | gyro_data[3]),\
+            (int16_t)((gyro_data[4]<<8) | gyro_data[5]));
     
     MPU_Burst_Read_Registers(MPU_REG_ACC_OUT, 6, acc_data);
 
     printf("acc x=%5d y=%5d z=%5d\r\n", \
-            (short)((acc_data[0]<<8) | acc_data[1]),\
-            (short)((acc_data[2]<<8) | acc_data[3]),\
-            (short)((acc_data[4]<<8) | acc_data[5]));
+            (int16_t)((acc_data[0]<<8) | acc_data[1]),\
+            (int16_t)((acc_data[2]<<8) | acc_data[3]),\
+            (int16_t)((acc_data[4]<<8) | acc_data[5]));
 }
