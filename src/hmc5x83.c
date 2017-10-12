@@ -3,15 +3,15 @@
 #include "i2c.h"
 #include "stm32f3xx_ll_utils.h"
 
-void HMC_Write_Register(char reg, char value){
+void HMC_Write_Register(unsigned char reg, unsigned char value){
     I2C_Write_Register(HMC_I2C_ADDRESS, reg, value);
 }
 
-char HMC_Read_Register(char reg){
+char HMC_Read_Register(unsigned char reg){
     return I2C_Read_Register(HMC_I2C_ADDRESS, reg);
 }
 
-void HMC_Burst_Read_Registers(char reg, int number, char* result)
+void HMC_Burst_Read_Registers(unsigned char reg, int number, unsigned char* result)
 {
     I2C_Burst_Read_Registers(HMC_I2C_ADDRESS, reg, number, result);
 }
@@ -42,7 +42,7 @@ void HMC_Init()
 
 void HMC_Read()
 {
-    char mag_data[6];
+    unsigned char mag_data[6];
     // char temp_data[2];
     
     HMC_Burst_Read_Registers(HMC_REG_DATAOUT, 6, mag_data);

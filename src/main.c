@@ -23,8 +23,8 @@ int main() {
         I2C_Init();
         // MPU_Init();
         // HMC_Init();
-        
-        while(1){
+
+        while(1){              
                 LL_GPIO_SetOutputPin(GPIOB, LL_GPIO_PIN_3);
 
                 LL_mDelay(1000);
@@ -36,6 +36,7 @@ int main() {
                 MS5611_Read_Temp();
                 // MPU_Read_Acc_Gyro(); 
                 // HMC_Read();             /  
+                printf("\r\n");
         };
 }
 

@@ -8,7 +8,7 @@
             "type": "shell",
             "command": "make",
             "args":[
-                "clean", "all", "flash"
+                "clean", "all",
             ],
             "group": {
                 "kind": "build",

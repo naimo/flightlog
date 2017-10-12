@@ -9,6 +9,7 @@
 #define MS5611_CMD_ADC 0x00
 
 #define MS5611_CMD_D1_4096 0x48
+#define MS5611_CMD_D2_256 0x50
 #define MS5611_CMD_D2_4096 0x58
 
 
@@ -25,5 +26,6 @@ typedef struct MS5611_Calib_s {
 void MS5611_Init();
 void MS5611_Read_Acc_Gyro();
 void MS5611_Read_Temp();
+void MS5611_Read_Temp_and_Pressure();
 
 #endif
