@@ -1,21 +1,17 @@
 CC = arm-none-eabi-gcc
 OBJCOPY = arm-none-eabi-objcopy
 
+ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+
+VPATH:=$(VPATH):$(ROOT_DIR)/src
+
 INCLUDES = src
-INCLUDES += src/system
-INCLUDES += src/drivers
-INCLUDES += src/drivers/sensors
 INCLUDES += STM32CubeF3/Drivers/CMSIS/Device/ST/STM32F3xx/Include
 INCLUDES += STM32CubeF3/Drivers/STM32F3xx_HAL_Driver/Inc
 INCLUDES += STM32CubeF3/Drivers/CMSIS/Include
 
-CSRC = src/main.c
-CSRC += src/system/retarget.c
-CSRC += src/system/system_stm32f3xx.c
-CSRC += src/drivers/i2c.c
-CSRC += src/drivers/sensors/hmc5x83.c
-CSRC += src/drivers/sensors/mpu6050.c
-CSRC += src/drivers/sensors/ms5607.c
+include $(ROOT_DIR)/src/src.mk
+
 CSRC += STM32CubeF3/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_gpio.c
 CSRC += STM32CubeF3/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_utils.c
 CSRC += STM32CubeF3/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_usart.c

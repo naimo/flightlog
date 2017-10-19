@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "mpu6050.h"
-#include "i2c.h"
 #include "stm32f3xx_ll_utils.h"
+#include "mpu6050.h"
+#include "drivers/i2c.h"
 
 void MPU_Write_Register(uint8_t reg, uint8_t value){
     I2C_Write_Register(MPU_I2C_ADDRESS, reg, value);
@@ -38,12 +38,12 @@ void MPU_Init()
     LL_mDelay(10);    
 
     //gyro 500 degrees per second
-    MPU_Write_Register(MPU_REG_GYRO_CONFIG, MPU_GYRO_CONFIG_500DPS);
+    MPU_Write_Register(MPU_REG_GYRO_CONFIG, MPU_GYRO_CONFIG_500DPS << 3);
 
     LL_mDelay(10);    
 
     //accel +-4g
-    MPU_Write_Register(MPU_REG_ACC_CONFIG, MPU_ACC_CONFIG_4G);
+    MPU_Write_Register(MPU_REG_ACC_CONFIG, MPU_ACC_CONFIG_4G << 3);
 }
 
 void MPU_Read_Acc_Gyro()

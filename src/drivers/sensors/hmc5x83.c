@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "hmc5x83.h"
-#include "i2c.h"
 #include "stm32f3xx_ll_utils.h"
+#include "hmc5x83.h"
+#include "drivers/i2c.h"
 
 void HMC_Write_Register(uint8_t reg, uint8_t value){
     I2C_Write_Register(HMC_I2C_ADDRESS, reg, value);
