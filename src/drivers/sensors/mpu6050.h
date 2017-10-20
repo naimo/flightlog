@@ -23,7 +23,7 @@ enum mpu_config_dlpf {
     MPU_CONFIG_DLPF_A5_G5
 };
 
-enum mpu_gyro_config_fs {
+enum mpu_gyro_config_gfs {
     MPU_GYRO_CONFIG_250DPS = 0,
     MPU_GYRO_CONFIG_500DPS,
     MPU_GYRO_CONFIG_1000DPS,
@@ -35,6 +35,12 @@ enum mpu_acc_config_afs {
     MPU_ACC_CONFIG_4G,
     MPU_ACC_CONFIG_8G,
     MPU_ACC_CONFIG_16G
+};
+
+struct mpu_config {
+    enum mpu_config_dlpf dlpf;
+    enum mpu_gyro_config_gfs gfs;
+    enum mpu_acc_config_afs afs;
 };
 
 void MPU_Init();

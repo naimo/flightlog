@@ -16,7 +16,7 @@ void MPU_Burst_Read_Registers(uint8_t reg, int32_t number, uint8_t* result)
     I2C_Burst_Read_Registers(MPU_I2C_ADDRESS, reg, number, result);
 }
 
-void MPU_Init()
+void MPU_Init(const struct mpu_config *mpuconfig)
 {    
     LL_mDelay(10);    
 
@@ -30,20 +30,18 @@ void MPU_Init()
 
     LL_mDelay(10);    
 
-    //set acc/gyro low pass filter
-    MPU_Write_Register(MPU_REG_CONFIG, MPU_CONFIG_DLPF_A5_G5);
+        // acc/gyro low pass filter
+    MPU_Write_Register(MPU_REG_CONFIG, mpuconfig->dlpf);
 
     // TODO : CALIB
 
     LL_mDelay(10);    
 
-    //gyro 500 degrees per second
-    MPU_Write_Register(MPU_REG_GYRO_CONFIG, MPU_GYRO_CONFIG_500DPS << 3);
+    MPU_Write_Register(MPU_REG_GYRO_CONFIG, mpuconfig->gfs << 3);
 
     LL_mDelay(10);    
 
-    //accel +-4g
-    MPU_Write_Register(MPU_REG_ACC_CONFIG, MPU_ACC_CONFIG_4G << 3);
+    MPU_Write_Register(MPU_REG_ACC_CONFIG, mpuconfig->afs << 3);
 }
 
 void MPU_Read_Acc_Gyro()

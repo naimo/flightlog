@@ -16,12 +16,20 @@ void SystemClock_Config(void);
 void StatusLED_Init(void);
 void I2C_init();
 
+const struct mpu_config mpuconfig = {
+        .dlpf = MPU_CONFIG_DLPF_A10_G10,
+        //gyro 500 degrees per second      
+        .gfs = MPU_GYRO_CONFIG_500DPS,
+        //accel +-4g
+        .afs = MPU_ACC_CONFIG_4G
+};
+
 int main() {
         SystemClock_Config();
         Retarget_Init();
         StatusLED_Init();
         I2C_Init();
-        MPU_Init();
+        MPU_Init(&mpuconfig);
         HMC_Init();
         MS5607_Init();                                
         
