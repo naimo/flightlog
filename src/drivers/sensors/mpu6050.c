@@ -44,22 +44,30 @@ void MPU_Init(const struct mpu_config *mpuconfig)
     MPU_Write_Register(MPU_REG_ACC_CONFIG, mpuconfig->afs << 3);
 }
 
-void MPU_Read_Acc_Gyro()
+void MPU_Read_Acc_Gyro(const struct mpu_config *mpuconfig)
 {
     uint8_t gyro_data[6];
-    uint8_t acc_data[6];
 
     MPU_Burst_Read_Registers(MPU_REG_GYRO_OUT, 6, gyro_data);
-    
-    printf("gyro x=%5d y=%5d z=%5d ", \
-            (int16_t)((gyro_data[0]<<8) | gyro_data[1]),\
-            (int16_t)((gyro_data[2]<<8) | gyro_data[3]),\
-            (int16_t)((gyro_data[4]<<8) | gyro_data[5]));
+
+    int32_t gyrox,gyroy,gyroz;
+    int32_t gyrofs;
+    gyrofs = 25000 << (mpuconfig->gfs);
+    gyrox = (gyrofs * (int16_t)((gyro_data[0] << 8) | gyro_data[1])) >> 15; 
+    gyroy = (gyrofs * (int16_t)((gyro_data[2] << 8) | gyro_data[3])) >> 15;
+    gyroz = (gyrofs * (int16_t)((gyro_data[4] << 8) | gyro_data[5])) >> 15;
+    printf("gyro x=%6ld y=%6ld z=%6ld (dps/100)\r\n", gyrox, gyroy, gyroz);
+
+    uint8_t acc_data[6];
     
     MPU_Burst_Read_Registers(MPU_REG_ACC_OUT, 6, acc_data);
 
-    printf("acc x=%5d y=%5d z=%5d\r\n", \
-            (int16_t)((acc_data[0]<<8) | acc_data[1]),\
-            (int16_t)((acc_data[2]<<8) | acc_data[3]),\
-            (int16_t)((acc_data[4]<<8) | acc_data[5]));
+    int32_t accx,accy,accz;
+    int32_t accfs;
+    accfs = 20000 << (mpuconfig->afs);
+    accx = (accfs * (int16_t)((acc_data[0] << 8) | acc_data[1])) >> 15;
+    accy = (accfs * (int16_t)((acc_data[2] << 8) | acc_data[3])) >> 15;
+    accz = (accfs * (int16_t)((acc_data[4] << 8) | acc_data[5])) >> 15;
+
+    printf("acc x=%6ld y=%6ld z=%6ld (mg/10)\r\n", accx, accy, accz);
 }

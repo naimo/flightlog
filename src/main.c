@@ -5,6 +5,7 @@
 #include "drivers/sensors/hmc5x83.h"
 #include "drivers/sensors/ms5607.h"
 #include "drivers/i2c.h"
+#include "drivers/spi.h"
 #include "stm32f3xx.h"
 #include "stm32f3xx_ll_bus.h"
 #include "stm32f3xx_ll_gpio.h"
@@ -29,19 +30,27 @@ int main() {
         Retarget_Init();
         StatusLED_Init();
         I2C_Init();
+        SPI_Init();
         MPU_Init(&mpuconfig);
-        HMC_Init();
-        MS5607_Init();                                
-        
-        int32_t temp, pressure;
+        // HMC_Init();
+        // MS5607_Init();                                
 
-        while(1){            
-                // LL_mDelay(50);
+
+        LL_mDelay(1000); // short delay required after initialisation of SPI device instance.
+        const uint8_t out[] = { 0x9F, 0, 0, 0 };
+        uint8_t in[4];
+        SPI_transfer(out, in, sizeof(out));
+
+        printf("%x,%x,%x,%x\r\n", in[0],in[1],in[2],in[3]);
+
+        // int32_t temp, pressure;
+        while(1){                         
+                LL_mDelay(100);
                 LL_GPIO_TogglePin(GPIOB, LL_GPIO_PIN_3);
 
-                MS5607_Read_Temp_and_Pressure(&temp, &pressure);
-                MPU_Read_Acc_Gyro(); 
-                HMC_Read();
+                // MS5607_Read_Temp_and_Pressure(&temp, &pressure);
+                MPU_Read_Acc_Gyro(&mpuconfig); 
+                // HMC_Read();
                 printf("\r\n");
         };
 }

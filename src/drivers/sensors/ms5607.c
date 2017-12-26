@@ -105,13 +105,8 @@ void MS5607_Read_Temp_and_Pressure(int32_t *temp, int32_t *pressure)
 
     _pressure = ((int64_t)D1 * sens / 2097152 - offset) / 32768;
 
-    // printf("raw_temp = %lu\r\n", D2);
-    // printf("dt = %ld\r\n", dt);
-    printf("temp = %ld\r\n", _temp);
-    
-    // printf("raw_pressure = %lu\r\n", D1);
-    // printf("offset = %08lx%08lx, sensitivity = %08lx%08lx\r\n", (uint32_t)(offset>>32), (uint32_t)(offset & 0xFFFFFFFF), (uint32_t)(sens>>32), (uint32_t)(sens & 0xFFFFFFFF));
-    printf("pressure = %ld\r\n", _pressure);
+    printf("temp = %ld (deg/100)\r\n", _temp);
+    printf("pressure = %ld (hPa/100)\r\n", _pressure);
 
     *temp = _temp;
     *pressure = _pressure; 

@@ -47,10 +47,12 @@ void HMC_Read()
     
     HMC_Burst_Read_Registers(HMC_REG_DATAOUT, 6, mag_data);
 
-    printf("mag x=%5d y=%5d z=%5d\r\n", \
-    (int16_t)((mag_data[0]<<8) | mag_data[1]),\
-    (int16_t)((mag_data[4]<<8) | mag_data[5]),\
-    (int16_t)((mag_data[2]<<8) | mag_data[3]));
+    int32_t magx,magy,magz;
+    magx = (1000 * (int16_t)((mag_data[0] << 8) | mag_data[1])) / 1370;
+    magy = (1000 * (int16_t)((mag_data[2] << 8) | mag_data[3])) / 1370;
+    magz = (1000 * (int16_t)((mag_data[4] << 8) | mag_data[5])) / 1370;
+
+    printf("mag x=%5ld y=%5ld z=%5ld (Gauss/1000)\r\n",magx,magy,magz);
 
     // HMC_Burst_Read_Registers(HMC_REG_TEMPOUT, 2, temp_data);
 

@@ -7,19 +7,19 @@
 
 void I2C_Init()
 {
-    uint32_t timing = 0;
+    // uint32_t timing = 0;
     
     /* Enbale GPIOB clock */
     LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
 
-    LL_GPIO_InitTypeDef UART_TXPIN_InitStruct;       
-    UART_TXPIN_InitStruct.Pin = LL_GPIO_PIN_6 | LL_GPIO_PIN_7;
-    UART_TXPIN_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
-    UART_TXPIN_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
-    UART_TXPIN_InitStruct.OutputType = LL_GPIO_OUTPUT_OPENDRAIN;
-    UART_TXPIN_InitStruct.Pull = LL_GPIO_PULL_UP;
-    UART_TXPIN_InitStruct.Alternate = LL_GPIO_AF_4;
-    LL_GPIO_Init(GPIOB, &UART_TXPIN_InitStruct);
+    LL_GPIO_InitTypeDef I2C_GPIO_InitStruct;       
+    I2C_GPIO_InitStruct.Pin = LL_GPIO_PIN_6 | LL_GPIO_PIN_7;
+    I2C_GPIO_InitStruct.Mode = LL_GPIO_MODE_ALTERNATE;
+    I2C_GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_HIGH;
+    I2C_GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_OPENDRAIN;
+    I2C_GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
+    I2C_GPIO_InitStruct.Alternate = LL_GPIO_AF_4;
+    LL_GPIO_Init(GPIOB, &I2C_GPIO_InitStruct);
 
     /* (2) Enable the I2C1 peripheral clock and I2C1 clock source ***************/
 
@@ -29,12 +29,12 @@ void I2C_Init()
     LL_RCC_SetI2CClockSource(LL_RCC_I2C1_CLKSOURCE_HSI);
     
     /* Disable I2C1 prior modifying configuration registers */
-    LL_I2C_Disable(I2C1);
+    // LL_I2C_Disable(I2C1);
 
     /* Configure the SDA setup, hold time and the SCL high, low period */
     /* values from datasheet for 8MHz HSI */
-    timing = __LL_I2C_CONVERT_TIMINGS(0, 0x3, 0x1, 0x3, 0x9);
-    LL_I2C_SetTiming(I2C1, timing);
+    // timing = __LL_I2C_CONVERT_TIMINGS(0, 0x3, 0x1, 0x3, 0x9);
+    // LL_I2C_SetTiming(I2C1, timing);
 
     LL_I2C_Enable(I2C1);
 }
@@ -98,6 +98,7 @@ void I2C_Burst_Read_Registers(uint8_t SlaveAddr, uint8_t reg, int32_t number, ui
     // send write start
     LL_I2C_HandleTransfer(I2C1, SlaveAddr, LL_I2C_ADDRSLAVE_7BIT, 1, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);                
     LL_I2C_TransmitData8(I2C1, reg);  
+
     // Busy wait for communication to end
     while(LL_I2C_IsActiveFlag_BUSY(I2C1));
 

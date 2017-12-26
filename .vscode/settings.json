@@ -8,6 +8,8 @@
         "initializer_list": "c",
         "stdio.h": "c",
         "stm32f3xx_ll_i2c.h": "c",
-        "stm32f3xx_ll_utils.h": "c"
+        "stm32f3xx_ll_utils.h": "c",
+        "i2c.h": "c",
+        "retarget.h": "c"
     }
 }

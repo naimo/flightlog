@@ -15,6 +15,8 @@ include $(ROOT_DIR)/src/src.mk
 CSRC += STM32CubeF3/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_gpio.c
 CSRC += STM32CubeF3/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_utils.c
 CSRC += STM32CubeF3/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_usart.c
+CSRC += STM32CubeF3/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_spi.c
+CSRC += STM32CubeF3/Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_ll_rcc.c
 
 CFLAGS = -Wall -mcpu=cortex-m4 -mlittle-endian -mthumb -O0 -g
 CFLAGS += -specs=nano.specs -DSTM32F303xC -DUSE_FULL_LL_DRIVER
