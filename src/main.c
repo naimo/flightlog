@@ -35,7 +35,6 @@ int main() {
         // HMC_Init();
         // MS5607_Init();                                
 
-
         LL_mDelay(1000); // short delay required after initialisation of SPI device instance.
         const uint8_t out[] = { 0x9F, 0, 0, 0 };
         uint8_t in[4];
@@ -51,7 +50,7 @@ int main() {
                 // MS5607_Read_Temp_and_Pressure(&temp, &pressure);
                 MPU_Read_Acc_Gyro(&mpuconfig); 
                 // HMC_Read();
-                printf("\r\n");
+                // printf("\r\n");
         };
 }
 

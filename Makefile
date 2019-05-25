@@ -1,5 +1,6 @@
-CC = arm-none-eabi-gcc
-OBJCOPY = arm-none-eabi-objcopy
+TOOLCHAIN_PATH = toolchain/bin
+CC = $(TOOLCHAIN_PATH)/arm-none-eabi-gcc
+OBJCOPY = $(TOOLCHAIN_PATH)/arm-none-eabi-objcopy
 
 ROOT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
